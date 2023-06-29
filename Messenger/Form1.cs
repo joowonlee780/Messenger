@@ -26,6 +26,7 @@ namespace Messenger
         string data;
 
 
+
         //라디오 버튼 어느쪽인지
         bool isServerRadioCheck;
         bool isClientRadioCheck;

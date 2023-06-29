@@ -184,7 +184,7 @@ namespace Messenger
                         {
                             messageBox.Items.Add("상대방이 나갔습니다. 나가기 버튼을 눌러주세요.");
                             serverSocket.Disconnect(true);
-                            listenSocket.Disconnect(true);
+                            //listenSocket.Disconnect(true);
 
                             data = "";
                             return;

@@ -46,6 +46,7 @@ namespace Messenger
             portBox.Enabled = false;
             startButton.Enabled = false;
             connectButton.Enabled = false;
+            sendButton.Enabled = false;
         }
 
 
@@ -149,14 +150,13 @@ namespace Messenger
             if (!isConnect) return;
 
             byte[] message = Encoding.Default.GetBytes(sendBox.Text);
-
+            
             if (isServerRadioCheck)
             { int sendInt = serverSocket.Send(message); }
-            
+
             if (isClientRadioCheck)
             { int sendInt = clientSocket.Send(message); }
-            
-
+           
             messageBox.Items.Add("나>> " + sendBox.Text);
             sendBox.Clear();
             sendBox.Text = "";
@@ -186,6 +186,12 @@ namespace Messenger
                             serverSocket.Disconnect(true);
                             //listenSocket.Disconnect(true);
 
+
+                            sendButton.Enabled = false;
+
+
+
+
                             data = "";
                             return;
                         }
@@ -211,7 +217,18 @@ namespace Messenger
                         {
                             messageBox.Items.Add("상대방이 나갔습니다. 나가기 버튼을 눌러주세요.");
                             data = "";
+
+
+
+                            sendButton.Enabled = false;
+
+
+
+
                             clientSocket.Disconnect(true);
+
+
+
                             return;
                         }
 
@@ -270,7 +287,7 @@ namespace Messenger
             if (!isConnect) return;
             isConnect = false;
 
-
+            sendButton.Enabled = false;
             byte[] message = Encoding.Default.GetBytes("out");
 
             if (isClientRadioCheck)
@@ -330,8 +347,8 @@ namespace Messenger
                 {
                     Delay(4000);
                     if (clientSocket != null)
-                        clientSocket.Close();
-
+                        //clientSocket.Close();
+                        clientSocket.Disconnect(false);
                 }
                 catch(Exception ex)
                 { }
@@ -352,9 +369,11 @@ namespace Messenger
                     Delay(4000);
 
                     if (serverSocket != null)
-                        serverSocket.Close();
+                        //serverSocket.Close();
+                        serverSocket.Disconnect(false);
                     if (listenSocket != null)
-                        listenSocket.Close();
+                        //listenSocket.Close();
+                        listenSocket.Disconnect(false);
                 }
                 catch (Exception ex)
                 { }
@@ -459,6 +478,12 @@ namespace Messenger
 
 
                 messageBox.Items.Add("서버연결성공");
+
+
+                sendButton.Enabled = true;
+
+
+
                 Thread listenThread = new Thread(Receive_Message);
                 listenThread.Start();
 
@@ -526,6 +551,8 @@ namespace Messenger
 
             //연결성공
             messageBox.Items.Add("서버접속완료 " + IPAddress.Parse(ipBox.Text) + ":" + portBox.Text);
+
+            sendButton.Enabled = true;
 
             isConnect = true;
             Connected_Box_Visable(true);

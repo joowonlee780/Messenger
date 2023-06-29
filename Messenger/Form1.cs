@@ -486,13 +486,7 @@ namespace Messenger
 
                 Thread listenThread = new Thread(Receive_Message);
                 listenThread.Start();
-
-
-                //if (!isConnect)
-                //{
-                //    listenThread.Abort();
-                //    return;
-                //}
+                
             }
             
         }
@@ -563,11 +557,7 @@ namespace Messenger
             listenThread.Start();
 
 
-            //if (!isConnect)
-            //{
-            //    listenThread.Abort();
-            //    return;
-            //}
+            
 
         }
 
